@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-variant-ligatures: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  min-height: calc(100vh - 40px);
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: "Carter One", cursive;
+  font-size: 2.5rem;
+  color: #012792;
+  margin: 0;
+}
+
+h2 {
+  text-align: center;
+}
+
+p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 6px 0 0 0;
+}
+
+button {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #1282dd;
+  padding: 12px 24px;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #076bbd;
+}
+button:disabled {
+  background-color: #ccc;
+  cursor: default;
+}
+
+input {
+  width: 120px;
+  padding: 10px;
+  margin: 3px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  outline: none;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  width: calc(100% - 40px);
+  padding: 20px;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px -15px #00000050;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.dice-template {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-image: linear-gradient(#eb1c24 5%, #730e11);
+  background-position: center;
+  background-size: 105%;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  margin: 5px 5px 10px 5px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+@media (min-width: 980px) {
+  .dice-template {
+    width: 150px;
+    height: 150px;
+    margin: 10px 10px 20px 10px;
+    border-radius: 26px;
+  }
+}
+@media (min-width: 1200px) {
+  .dice-template {
+    width: 200px;
+    height: 200px;
+    border-radius: 35px;
+  }
+}
+
+.animation,
+.animation-custom-dice {
+  animation-name: shadow;
+  animation-timing-function: linear;
+  animation-duration: 0.8s;
+}
+
+@keyframes shadow {
+  0% {
+    box-shadow: 0 0 0px #c70000cc;
+    z-index: 1;
+  }
+  40% {
+    box-shadow: 0 0 20px #c70000aa;
+  }
+  99% {
+    box-shadow: 0 0 30px 3px #c7000000;
+  }
+  100% {
+    box-shadow: none;
+    z-index: 0;
+  }
+}

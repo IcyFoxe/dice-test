@@ -2,13 +2,131 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dice Test | QSXL</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./global.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <title>Dice Test | QSXL</title>
 </head>
 
 <body>
-	<!-- place your code here -->
+  <div id="root">
+    <noscript>
+      <h2>Please enable JavaScript to run this page.</h2>
+    </noscript>
+  </div>
 </body>
+
+<script type="text/babel">
+  function Dice() {
+    // -- MAIN DICE --
+    const [dice, setDice] = React.useState([getRandomNumber(6)]);
+
+    function rollDice() {
+      let newDice = dice.map((currentValue, currentIndex) => getRandomNumber(6));
+      setDice(newDice);
+
+      // animation
+      let diceTemplates = document.querySelectorAll('.animation');
+      diceTemplates.forEach(element => {
+        element.classList.remove("animation");
+        void element.offsetWidth;
+        element.classList.add("animation");
+      })
+    }
+
+    function addDice() {
+      if (dice.length >= 5) return;
+      let newDice = [...dice];
+      newDice.push(getRandomNumber(6));
+      setDice(newDice);
+    }
+
+    function removeDice() {
+      if (dice.length <= 1) return;
+      let newDice = [...dice];
+      newDice.pop();
+      setDice(newDice);
+    }
+
+    // -- CUSTOM DICE --
+    const [customDice, setCustomDice] = React.useState(['one', 'two', 'three', 'four', 'five', 'six']);
+    const [customDiceNumber, setCustomDiceNumber] = React.useState(getRandomNumber(6) - 1);
+
+    function rollCustomDice() {
+      setCustomDiceNumber(getRandomNumber(6) - 1);
+
+      // custom dice animation
+      let diceTemplate = document.querySelector('.animation-custom-dice');
+      diceTemplate.classList.remove("animation-custom-dice");
+      void diceTemplate.offsetWidth;
+      diceTemplate.classList.add("animation-custom-dice");
+    }
+
+    function modifyCustomDice(value, index) {
+      let newCustomDice = customDice.map((currentValue, currentIndex) =>
+        currentIndex === index ? value : currentValue
+      );
+      setCustomDice(newCustomDice);
+    }
+
+    // generates random number from 1 to a specified number
+    function getRandomNumber(max) {
+      return Math.floor(Math.random() * Math.floor(max) + 1);
+    }
+
+    return (
+      <main>
+        {/* main dice */}
+        <div className="section">
+          <h1>Dice Roll</h1>
+          <div className="container">
+            {dice.map((value, index) => (
+              <div className="dice-template animation" style={{ backgroundImage: `url('./assets/images/dice-${value}.png'), linear-gradient(#eb1c24 5%, #730e11)` }} key={index}></div>
+            ))}
+          </div>
+          <div>
+            <button onClick={removeDice} disabled={dice.length <= 1 ? true : false}>-</button>
+            <button onClick={rollDice}>Roll dice</button>
+            <button onClick={addDice} disabled={dice.length >= 5 ? true : false}>+</button>
+          </div>
+          <p style={dice.length == 1 ? { display: 'none' } : undefined}>Total: {dice.reduce((a, b) => a + b, 0)}</p>
+        </div>
+
+        {/* custom dice */}
+        <div className="section">
+          <h1>Custom Dice</h1>
+          <div className="dice-template animation-custom-dice">
+            {customDice[customDiceNumber]}
+          </div>
+          <div className="container">
+            <input type="text" placeholder="one" onChange={e => modifyCustomDice(e.target.value, 0)} />
+            <input type="text" placeholder="two" onChange={e => modifyCustomDice(e.target.value, 1)} />
+            <input type="text" placeholder="three" onChange={e => modifyCustomDice(e.target.value, 2)} />
+            <input type="text" placeholder="four" onChange={e => modifyCustomDice(e.target.value, 3)} />
+            <input type="text" placeholder="five" onChange={e => modifyCustomDice(e.target.value, 4)} />
+            <input type="text" placeholder="six" onChange={e => modifyCustomDice(e.target.value, 5)} />
+          </div>
+          <button onClick={rollCustomDice}>Roll dice</button>
+        </div>
+      </main>
+    )
+  }
+
+
+  ReactDOM.render(
+    <Dice />,
+    document.getElementById('root')
+  );
+</script>
 
 </html>
